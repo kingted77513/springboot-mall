@@ -1,5 +1,6 @@
 package com.teddy.springbootmall.rowmapper;
 
+import com.teddy.springbootmall.constant.ProductCategory;
 import com.teddy.springbootmall.model.Product;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +13,7 @@ public class ProductRowMapper implements RowMapper {
 
         product.setProductId(resultSet.getInt("product_id"));
         product.setProductName(resultSet.getString("product_name"));
-        product.setCategory(resultSet.getString("category"));
+        product.setCategory(ProductCategory.valueOf(resultSet.getString("category")));
         product.setImageUrl(resultSet.getString("image_url"));
         product.setPrice(resultSet.getInt("price"));
         product.setStock(resultSet.getInt("stock"));
