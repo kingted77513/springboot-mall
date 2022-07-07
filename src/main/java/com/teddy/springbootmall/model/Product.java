@@ -35,7 +35,7 @@ public class Product {
     }
 
     public void setCategory(ProductCategory category) {
-        this.category = category;
+        this. category = category;
     }
 
     public String getImageUrl() {
