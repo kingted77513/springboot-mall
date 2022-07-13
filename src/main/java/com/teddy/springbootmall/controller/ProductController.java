@@ -1,5 +1,6 @@
 package com.teddy.springbootmall.controller;
 
+import com.teddy.springbootmall.constant.ProductCategory;
 import com.teddy.springbootmall.dto.ProductRequest;
 import com.teddy.springbootmall.model.Product;
 import com.teddy.springbootmall.service.ProductService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -63,8 +65,9 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(){
-        List<Product> products = productService.getProducts();
+    public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) ProductCategory category,
+                                                     @RequestParam(required = false) String search){
+        List<Product> products = productService.getProducts(category, search);
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
 }
