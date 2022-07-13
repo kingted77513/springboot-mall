@@ -4,6 +4,7 @@ import com.teddy.springbootmall.dao.ProductDao;
 import com.teddy.springbootmall.dto.ProductRequest;
 import com.teddy.springbootmall.model.Product;
 import com.teddy.springbootmall.service.ProductService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,5 +32,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProductById(Integer productId) {
         productDao.deleteProductById(productId);
+    }
+
+    @Override
+    public List<Product> getProducts() {
+        return productDao.getProducts();
     }
 }

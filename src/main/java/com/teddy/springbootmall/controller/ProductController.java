@@ -3,6 +3,7 @@ package com.teddy.springbootmall.controller;
 import com.teddy.springbootmall.dto.ProductRequest;
 import com.teddy.springbootmall.model.Product;
 import com.teddy.springbootmall.service.ProductService;
+import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/product/{productId}")
+    @GetMapping("/products/{productId}")
     public ResponseEntity<Product> getProduct(@PathVariable Integer productId){
         Product product = productService.getProductById(productId);
         if (Objects.nonNull(product)){
@@ -59,5 +60,11 @@ public class ProductController {
         productService.deleteProductById(productId);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> getProducts(){
+        List<Product> products = productService.getProducts();
+        return ResponseEntity.status(HttpStatus.OK).body(products);
     }
 }
