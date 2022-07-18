@@ -26,7 +26,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public Product getProductById(Integer productId) {
         String sql  = "SELECT product_id, product_name, category, image_url, price, stock, description, created_date, last_modified_date FROM "
-            + "mall.product WHERE product_id = :productId";
+            + "product WHERE product_id = :productId";
 
         Map<String, Object> map = new HashMap<>();
         map.put("productId", productId);
@@ -42,7 +42,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Integer createProduct(ProductRequest productRequest) {
-        String sql = "INSERT INTO mall.product(product_name, category, image_url, price, stock, description, created_date, "
+        String sql = "INSERT INTO product(product_name, category, image_url, price, stock, description, created_date, "
             + "last_modified_date)"+ "VALUES (:productName, :category, :imageUrl, :price, :stock, :description, :createdDate, :lastModifiedDate)";
 
         Map<String, Object> map = new HashMap<>();
@@ -68,7 +68,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public void updateProduct(Integer productId, ProductRequest productRequest) {
-        String sql = "UPDATE mall.product SET product_name = :productName, category = :category, image_url = :imageUrl, price = :price, " +
+        String sql = "UPDATE product SET product_name = :productName, category = :category, image_url = :imageUrl, price = :price, " +
             "stock = :stock, description = :description, last_modified_date = :lastModifiedDate" +
             " WHERE product_id = :productId";
 
@@ -89,7 +89,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public void deleteProductById(Integer productId) {
-        String sql = "DELETE FROM mall.product WHERE product_id = :productId";
+        String sql = "DELETE FROM product WHERE product_id = :productId";
 
         Map<String, Object> map = new HashMap<>();
         map.put("productId", productId);
@@ -100,7 +100,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public List<Product> getProducts(ProductQueryParams productQueryParams) {
         String sql  = "SELECT product_id, product_name, category, image_url, price, stock, description, created_date, last_modified_date FROM "
-            + "mall.product WHERE 1=1";
+            + "product WHERE 1=1";
 
         Map<String, Object> map = new HashMap<>();
 
@@ -136,7 +136,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Integer countProducts(ProductQueryParams productQueryParams) {
-        String sql  = "SELECT count(*) FROM mall.product WHERE 1=1";
+        String sql  = "SELECT count(*) FROM product WHERE 1=1";
 
         Map<String, Object> map = new HashMap<>();
 
