@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer register(UserRegisterRequest userRegisterRequest) {
         // 檢查註冊的 email
-        User user = userDao.getUserByMail(userRegisterRequest.getEmail());
+        User user = userDao.getUserByEmail(userRegisterRequest.getEmail());
 
         if (user != null){
             log.warn("該 email {} 已經被註冊", userRegisterRequest.getEmail());
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(UserLoginRequest userLoginRequest) {
-        User user = userDao.getUserByMail(userLoginRequest.getEmail());
+        User user = userDao.getUserByEmail(userLoginRequest.getEmail());
         if (user == null){
             log.warn("該 email {} 尚未註冊", userLoginRequest.getEmail());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
