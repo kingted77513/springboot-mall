@@ -1,11 +1,15 @@
 package com.teddy.springbootmall.dao.impl;
 
+import com.teddy.springbootmall.constant.ProductCategory;
 import com.teddy.springbootmall.dao.OrderDao;
+import com.teddy.springbootmall.dto.OrderQueryParams;
 import com.teddy.springbootmall.model.Order;
 import com.teddy.springbootmall.model.OrderItem;
+import com.teddy.springbootmall.model.Product;
 import com.teddy.springbootmall.model.User;
 import com.teddy.springbootmall.rowmapper.OrderItemRowMapper;
 import com.teddy.springbootmall.rowmapper.OrderRowMapper;
+import com.teddy.springbootmall.rowmapper.ProductRowMapper;
 import com.teddy.springbootmall.rowmapper.UserRowMapper;
 import java.util.Date;
 import java.util.HashMap;
@@ -93,5 +97,47 @@ public class OrderDaoImpl implements OrderDao {
         map.put("orderId", orderId);
 
         return namedParameterJdbcTemplate.query(sql, map, new OrderItemRowMapper());
+    }
+
+    @Override
+    public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+        String sql  = "SELECT order_id, user_id, total_amount, created_date, last_modified_date FROM `order` WHERE 1=1";
+
+        Map<String, Object> map = new HashMap<>();
+
+        // 查詢條件 Filter
+        sql = addFilteringSql(orderQueryParams, sql, map);
+
+        // 排序
+        sql = sql + " ORDER BY created_date DESC";
+
+        // 分頁 Pagination
+        sql = sql + " LIMIT :limit OFFSET :offset";
+        map.put("limit", orderQueryParams.getLimit());
+        map.put("offset", orderQueryParams.getOffset());
+
+        List<Order> orderList = namedParameterJdbcTemplate.query(sql, map, new OrderRowMapper());
+        return orderList;
+    }
+
+    private String addFilteringSql(OrderQueryParams orderQueryParams, String sql, Map<String, Object> map) {
+        Integer userId = orderQueryParams.getUserId();
+        if (userId != null) {
+            sql = sql + " AND user_id = :userId";
+            map.put("userId", userId);
+        }
+        return sql;
+    }
+
+    @Override
+    public Integer countOrder(OrderQueryParams orderQueryParams) {
+        String sql  = "SELECT count(*) FROM `order` WHERE 1=1";
+
+        Map<String, Object> map = new HashMap<>();
+
+        // 查詢條件 Filter
+        sql = addFilteringSql(orderQueryParams, sql, map);
+
+        return namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
     }
 }
